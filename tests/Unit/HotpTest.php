@@ -14,4 +14,19 @@ class HotpTest extends TestCase
             $this->assertEquals($i, strlen(Base32::decode(Hotp::generateSecret($i))));
         }
     }
+
+    public function test_getCode(): void
+    {
+        $expectedCodes = [
+            '954898',
+            '440748',
+            '451288',
+            '880908',
+            '154819'
+        ];
+
+        foreach ($expectedCodes as $counter => $expectedCode) {
+            $this->assertEquals($expectedCode, Hotp::getCode('7OVJNCCWPJK6KGCI3E2AFWPENV5HETSV', $counter));
+        }
+    }
 }
