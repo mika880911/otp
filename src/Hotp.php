@@ -48,4 +48,24 @@ class Hotp
             (ord($binary[$offset + 3]) & 0xFF)
         ) % pow(10, $digits), $digits, '0', STR_PAD_LEFT);
     }
+
+    /**
+     * Verify the code is correct.
+     *
+     * @param string $code
+     * @param string $secret
+     * @param int $counter
+     * @param int $digits
+     * @param OtpAlgorithm $algorithm
+     * @return bool
+     */
+    public static function verify(
+        string $code,
+        string $secret,
+        int $counter,
+        int $digits = 6,
+        OtpAlgorithm $algorithm = OtpAlgorithm::SHA1
+    ): bool {
+        return $code === self::getCode($secret, $counter, 0, $digits, $algorithm);
+    }
 }
