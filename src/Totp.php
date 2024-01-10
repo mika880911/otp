@@ -39,4 +39,29 @@ class Totp
             'url' => "otpauth://totp/{$label}?secret={$secret}&issuer={$issuer}&algorithm={$algorithm->value}&digits={$digits}&period={$period}"
         ];
     }
+
+    /**
+     * Verify the code is correct.
+     *
+     * @param string $code
+     * @param string $secret
+     * @param int $digits
+     * @param OtpAlgorithm $algorithm
+     * @return bool
+     */
+    public static function verify(
+        string $code,
+        string $secret,
+        int $period = 30,
+        int $digits = 6,
+        OtpAlgorithm $algorithm = OtpAlgorithm::SHA1
+    ): bool {
+        for ($i = -1; $i < 2; $i++) {
+            if ($code === Otp::getCode($secret, floor(time() / $period), $i, $digits, $algorithm)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

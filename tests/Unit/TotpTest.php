@@ -21,4 +21,25 @@ class TotpTest extends TestCase
         $this->assertNotNull($actual['secret']);
         $this->assertEquals("otpauth://totp/{$label}?secret={$actual['secret']}&issuer={$issuer}&algorithm={$algorithm->value}&digits={$digits}&period={$period}", $actual['url']);
     }
+
+    public function test_verify(): void
+    {
+        uopz_set_return('time', 31);
+
+        $codes = [
+            '954898',
+            '440748',
+            '451288'
+        ];
+
+        $secret = '7OVJNCCWPJK6KGCI3E2AFWPENV5HETSV';
+
+        foreach ($codes as $code) {
+            $this->assertTrue(Totp::verify($code, $secret));
+        }
+
+        $this->assertFalse(Totp::verify('123456', $secret));
+
+        uopz_unset_return('time');
+    }
 }
