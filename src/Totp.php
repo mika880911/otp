@@ -45,6 +45,7 @@ class Totp
      *
      * @param string $code
      * @param string $secret
+     * @param int $period
      * @param int $digits
      * @param OtpAlgorithm $algorithm
      * @return bool
@@ -57,7 +58,7 @@ class Totp
         OtpAlgorithm $algorithm = OtpAlgorithm::SHA1
     ): bool {
         for ($i = -1; $i < 2; $i++) {
-            if ($code === Otp::getCode($secret, floor(time() / $period), $i, $digits, $algorithm)) {
+            if ($code === Otp::getCode($secret, floor(time() / $period) + $i, $digits, $algorithm)) {
                 return true;
             }
         }

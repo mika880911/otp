@@ -25,7 +25,6 @@ class Otp
      *
      * @param string $secret
      * @param int $counter
-     * @param int $step
      * @param int $digits
      * @param OtpAlgorithm $algorithm
      * @return string
@@ -33,11 +32,10 @@ class Otp
     public static function getCode(
         string $secret,
         int $counter,
-        int $step = 0,
         int $digits = 6,
         OtpAlgorithm $algorithm = OtpAlgorithm::SHA1
     ): string {
-        $c = pack('N*', 0, $counter + $step);
+        $c = pack('N*', 0, $counter);
         $binary = hash_hmac($algorithm->value, $c, Base32::decode($secret), true);
         $offset = ord($binary[-1]) & 0x0F;
 

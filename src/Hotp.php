@@ -59,6 +59,6 @@ class Hotp
         int $digits = 6,
         OtpAlgorithm $algorithm = OtpAlgorithm::SHA1
     ): bool {
-        return $code === Otp::getCode($secret, $counter, 0, $digits, $algorithm);
+        return $code === Otp::getCode($secret, $counter, $digits, $algorithm);
     }
 }
