@@ -2,7 +2,6 @@
 
 namespace Mika\Otp\Test\Unit;
 
-use Mika\Base32\Base32;
 use Mika\Otp\Enums\OtpAlgorithm;
 use Mika\Otp\Hotp;
 use PHPUnit\Framework\TestCase;
