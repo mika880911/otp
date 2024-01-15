@@ -25,7 +25,6 @@
     "mika/base32": "^1.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "^10.0",
-    "ext-uopz": "*"
+    "phpunit/phpunit": "^10.0"
   }
 }
