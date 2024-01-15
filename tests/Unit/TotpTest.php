@@ -3,6 +3,7 @@
 namespace Mika\Otp\Test\Unit;
 
 use Mika\Otp\Enums\OtpAlgorithm;
+use Mika\Otp\Otp;
 use Mika\Otp\Totp;
 use PHPUnit\Framework\TestCase;
 
@@ -24,22 +25,13 @@ class TotpTest extends TestCase
 
     public function test_verify(): void
     {
-        uopz_set_return('time', 31);
+        $secret = Otp::generateSecret();
 
-        $codes = [
-            '954898',
-            '440748',
-            '451288'
-        ];
-
-        $secret = '7OVJNCCWPJK6KGCI3E2AFWPENV5HETSV';
-
-        foreach ($codes as $code) {
+        for ($i = -1; $i < 2; $i++) {
+            $code = Otp::getCode($secret, floor(time() / 30) + $i);
             $this->assertTrue(Totp::verify($code, $secret));
         }
 
         $this->assertFalse(Totp::verify('123456', $secret));
-
-        uopz_unset_return('time');
     }
 }
